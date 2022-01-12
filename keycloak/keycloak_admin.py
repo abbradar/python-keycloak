@@ -1903,6 +1903,9 @@ class KeycloakAdmin:
 
     def refresh_token(self):
         refresh_token = self.token.get('refresh_token')
+        if refresh_token is None:
+            self.get_token()
+            return
         try:
             self.token = self.keycloak_openid.refresh_token(refresh_token)
         except KeycloakGetError as e:
